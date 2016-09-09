@@ -68,10 +68,6 @@ public class Percolation {
             uf.union(virtualTop, index);
         }
 
-        if (i == n) {
-            uf.union(virtualBottom, index);
-        }
-
         if (hasNorth(i) && isOpen(i - 1, j)) {
             int northIndex = toIndex(i - 1, j);
             uf.union(index, northIndex);
@@ -90,6 +86,10 @@ public class Percolation {
         if (hasEast(j) && isOpen(i, j + 1)) {
             int eastIndex = toIndex(i, j + 1);
             uf.union(index, eastIndex);
+        }
+
+        if (i == n && isFull(i, j)) {
+            uf.union(virtualBottom, index);
         }
     }
 
