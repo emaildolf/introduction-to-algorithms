@@ -68,7 +68,7 @@ public class Percolation {
             uf.union(virtualTop, index);
         }
 
-        if(i == n) {
+        if (i == n) {
             uf.union(virtualBottom, index);
         }
 
