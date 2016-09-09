@@ -6,6 +6,8 @@ public class Percolation {
     private boolean[] open;
     private WeightedQuickUnionUF uf;
 
+    private int virtualTop, virtualBottom;
+
     // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
 
@@ -14,9 +16,14 @@ public class Percolation {
         }
 
         this.n = n;
-        this.uf = new WeightedQuickUnionUF(1 + n * n);
-        this.open = new boolean[1 + n * n];
-        this.open[0] = true;
+        this.uf = new WeightedQuickUnionUF(2 + n * n);
+        this.open = new boolean[2 + (n * n)];
+
+        this.virtualTop = 0;
+        this.virtualBottom = 1;
+
+        this.open[virtualTop] = true;
+        this.open[virtualBottom] = true;
     }
 
     private void asseguraLimites(int i, int j) {
@@ -31,7 +38,7 @@ public class Percolation {
     }
 
     private int toIndex(int i, int j) {
-        return (i - 1) * n + j - 1 + 1;
+        return (i - 1) * n + j + 1;
     }
 
     private boolean hasNorth(int i) {
@@ -58,7 +65,11 @@ public class Percolation {
         this.open[index] = true;
 
         if (i == 1) {
-            uf.union(0, index);
+            uf.union(virtualTop, index);
+        }
+
+        if(i == n) {
+            uf.union(virtualBottom, index);
         }
 
         if (hasNorth(i) && isOpen(i - 1, j)) {
@@ -96,21 +107,12 @@ public class Percolation {
 
         int index = toIndex(i, j);
 
-        return uf.connected(0, index);
+        return uf.connected(virtualTop, index);
     }
 
     // does the system percolate?
     public boolean percolates() {
-
-        for (int k = 1; k <= n; k++) {
-
-            int bottomIndex = toIndex(n, k);
-            if (uf.connected(0, bottomIndex)) {
-                return true;
-            }
-        }
-
-        return false;
+        return uf.connected(virtualTop, virtualBottom);
     }
 
 }
