@@ -6,7 +6,7 @@ public class Percolation {
     private boolean[] open;
     private WeightedQuickUnionUF uf;
 
-    //union find with backwash
+    // union find with backwash
     private WeightedQuickUnionUF ufBW;
 
     private int virtualTop, virtualBottom;
