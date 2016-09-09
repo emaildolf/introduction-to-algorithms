@@ -30,23 +30,23 @@ public class Percolation {
         }
     }
 
-    int toIndex(int i, int j) {
+    private int toIndex(int i, int j) {
         return (i - 1) * n + j - 1 + 1;
     }
 
-    boolean hasNorth(int i) {
+    private boolean hasNorth(int i) {
         return i > 1;
     }
 
-    boolean hasSouth(int i) {
+    private boolean hasSouth(int i) {
         return i < n;
     }
 
-    boolean hasEast(int j) {
+    private boolean hasEast(int j) {
         return j < n;
     }
 
-    boolean hasWest(int j) {
+    private boolean hasWest(int j) {
         return j > 1;
     }
 
