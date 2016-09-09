@@ -6,6 +6,9 @@ public class Percolation {
     private boolean[] open;
     private WeightedQuickUnionUF uf;
 
+    //union find with backwash
+    private WeightedQuickUnionUF ufBW;
+
     private int virtualTop, virtualBottom;
 
     // create n-by-n grid, with all sites blocked
@@ -17,6 +20,7 @@ public class Percolation {
 
         this.n = n;
         this.uf = new WeightedQuickUnionUF(2 + n * n);
+        this.ufBW = new WeightedQuickUnionUF(2 + n * n);
         this.open = new boolean[2 + (n * n)];
 
         this.virtualTop = 0;
@@ -66,30 +70,35 @@ public class Percolation {
 
         if (i == 1) {
             uf.union(virtualTop, index);
+            ufBW.union(virtualTop, index);
         }
 
         if (hasNorth(i) && isOpen(i - 1, j)) {
             int northIndex = toIndex(i - 1, j);
             uf.union(index, northIndex);
+            ufBW.union(index, northIndex);
         }
 
         if (hasSouth(i) && isOpen(i + 1, j)) {
             int southIndex = toIndex(i + 1, j);
             uf.union(index, southIndex);
+            ufBW.union(index, southIndex);
         }
 
         if (hasWest(j) && isOpen(i, j - 1)) {
             int westIndex = toIndex(i, j - 1);
             uf.union(index, westIndex);
+            ufBW.union(index, westIndex);
         }
 
         if (hasEast(j) && isOpen(i, j + 1)) {
             int eastIndex = toIndex(i, j + 1);
             uf.union(index, eastIndex);
+            ufBW.union(index, eastIndex);
         }
 
-        if (i == n && isFull(i, j)) {
-            uf.union(virtualBottom, index);
+        if (i == n) {
+            ufBW.union(virtualBottom, index);
         }
     }
 
@@ -112,7 +121,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return uf.connected(virtualTop, virtualBottom);
+        return ufBW.connected(virtualTop, virtualBottom);
     }
 
 }
