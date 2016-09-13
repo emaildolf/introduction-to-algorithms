@@ -26,7 +26,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return this.last + 1;
     }
 
-    protected int queueSize() {
+    private int queueSize() {
         return this.queue.length;
     }
 
