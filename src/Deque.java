@@ -52,6 +52,8 @@ public class Deque<Item> implements Iterable<Item> {
 
             first = node;
         }
+
+        this.size++;
     }
 
     // add the item to the end
@@ -68,6 +70,8 @@ public class Deque<Item> implements Iterable<Item> {
 
             last = node;
         }
+
+        this.size++;
     }
 
     // remove and return the item from the front
@@ -107,6 +111,9 @@ public class Deque<Item> implements Iterable<Item> {
 
             Node newLast = last.prev;
             newLast.next = null;
+
+            last.prev = null;
+            last = newLast;
         }
 
         return item;
