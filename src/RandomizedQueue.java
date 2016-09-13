@@ -261,7 +261,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         queue = new RandomizedQueue<>();
         for(int i=0; i<1000; i++){
 
-            System.out.println(i);
             double n = r.nextDouble();
             if( n <= 0.1){
                 queue.enqueue(i);
