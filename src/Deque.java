@@ -14,7 +14,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
 
         private void ensuresNotNullItem(Item item) {
-            if(item == null) {
+            if (item == null) {
                 throw new NullPointerException();
             }
         }
@@ -43,10 +43,10 @@ public class Deque<Item> implements Iterable<Item> {
     public void addFirst(Item item) {
         Node node = new Node(item);
 
-        if(isEmpty()){
+        if (isEmpty()) {
             first = node;
             last = node;
-        }else {
+        } else {
             node.next = first;
             first.prev = node;
 
@@ -60,10 +60,10 @@ public class Deque<Item> implements Iterable<Item> {
     public void addLast(Item item) {
         Node node = new Node(item);
 
-        if(isEmpty()){
+        if (isEmpty()) {
             first = node;
             last = node;
-        }else {
+        } else {
 
             node.prev = last;
             last.next = node;
@@ -81,10 +81,10 @@ public class Deque<Item> implements Iterable<Item> {
         Item item = first.item;
 
         size--;
-        if(isEmpty()){
+        if (isEmpty()) {
             first = null;
             last = null;
-        }else {
+        } else {
 
             Node newFirst = first.next;
             newFirst.prev = null;
@@ -99,15 +99,16 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the end
     public Item removeLast() {
-        ensuresNotEmpty();;
+        ensuresNotEmpty();
+        ;
 
         Item item = last.item;
 
         size--;
-        if(isEmpty()){
+        if (isEmpty()) {
             first = null;
             last = null;
-        }else {
+        } else {
 
             Node newLast = last.prev;
             newLast.next = null;
@@ -120,7 +121,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private void ensuresNotEmpty() {
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new NoSuchElementException();
         }
     }
@@ -134,7 +135,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         private Node node;
 
-        public DequeIterator(Node node){
+        public DequeIterator(Node node) {
             this.node = node;
         }
 
@@ -146,11 +147,11 @@ public class Deque<Item> implements Iterable<Item> {
         @Override
         public Item next() {
 
-            if(!hasNext()){
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             }
 
-            Item item = (Item)node.item;
+            Item item = (Item) node.item;
             node = node.next;
             return item;
         }
@@ -169,8 +170,8 @@ public class Deque<Item> implements Iterable<Item> {
         assert deque.size() == 0;
 
         deque.addFirst(1);
-        assert  deque.isEmpty() == false;
-        assert  deque.size() == 1;
+        assert deque.isEmpty() == false;
+        assert deque.size() == 1;
 
         deque.addFirst(2);
         assert deque.removeFirst() == 2;
@@ -215,56 +216,56 @@ public class Deque<Item> implements Iterable<Item> {
         boolean failed = false;
         try {
             it.remove();
-        }catch(UnsupportedOperationException e){
+        } catch (UnsupportedOperationException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             it.next();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             deque.addFirst(null);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             deque.addLast(null);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         deque = new Deque<>();
 
         failed = false;
-        try{
+        try {
             deque.removeFirst();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             deque.removeLast();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 

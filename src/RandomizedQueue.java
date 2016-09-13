@@ -35,7 +35,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         ensuresNotNull(item);
 
-        if(shouldIncreaseQueueSize()){
+        if (shouldIncreaseQueueSize()) {
             increaseQueueSize();
         }
 
@@ -44,12 +44,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private boolean shouldIncreaseQueueSize() {
-        return queue.length-1 == last;
+        return queue.length - 1 == last;
     }
 
     private void increaseQueueSize() {
-        Item[] newQueue = (Item[]) new Object[queueSize()*2];
-        for(int i=0; i<queue.length; i++){
+        Item[] newQueue = (Item[]) new Object[queueSize() * 2];
+        for (int i = 0; i < queue.length; i++) {
             newQueue[i] = queue[i];
         }
 
@@ -57,7 +57,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void ensuresNotNull(Item item) {
-        if(item == null){
+        if (item == null) {
             throw new NullPointerException();
         }
     }
@@ -71,12 +71,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         this.last--;
 
-        if(!isEmpty()){
-            queue[index] = queue[last+1];
-            queue[last+1] = null;
+        if (!isEmpty()) {
+            queue[index] = queue[last + 1];
+            queue[last + 1] = null;
         }
 
-        if(shouldDecreaseQueueSize()){
+        if (shouldDecreaseQueueSize()) {
             decreaseQueueSize();
         }
 
@@ -84,12 +84,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private boolean shouldDecreaseQueueSize() {
-        return (queue.length)/4 == size();
+        return (queue.length) / 4 == size();
     }
 
     private void decreaseQueueSize() {
-        Item[] newQueue = (Item[]) new Object[queueSize()/2];
-        for(int i=0; i<newQueue.length; i++){
+        Item[] newQueue = (Item[]) new Object[queueSize() / 2];
+        for (int i = 0; i < newQueue.length; i++) {
             newQueue[i] = queue[i];
         }
 
@@ -102,8 +102,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return queue[StdRandom.uniform(size())];
     }
 
-    private void ensureNotEmpty(){
-        if(isEmpty()){
+    private void ensureNotEmpty() {
+        if (isEmpty()) {
             throw new NoSuchElementException();
         }
     }
@@ -120,7 +120,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public RandomizedQueueIterator() {
             indexes = new int[size()];
-            for(int i=0; i<size(); i++) {
+            for (int i = 0; i < size(); i++) {
                 indexes[i] = i;
             }
             StdRandom.shuffle(indexes);
@@ -135,14 +135,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         @Override
         public Item next() {
 
-            if(!hasNext()){
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             }
 
             int index = indexes[current];
             current++;
 
-            return (Item)queue[index];
+            return (Item) queue[index];
         }
 
         @Override
@@ -193,47 +193,47 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         boolean failed = false;
         try {
             it.remove();
-        }catch(UnsupportedOperationException e){
+        } catch (UnsupportedOperationException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             it.next();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             queue.enqueue(null);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         queue = new RandomizedQueue<>();
 
         failed = false;
-        try{
+        try {
             queue.dequeue();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
         failed = false;
-        try{
+        try {
             queue.sample();
-        }catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             failed = true;
-        }finally {
+        } finally {
             assert failed == true;
         }
 
