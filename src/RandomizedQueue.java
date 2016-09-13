@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
@@ -71,10 +72,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         this.last--;
 
-        if (!isEmpty()) {
-            queue[index] = queue[last + 1];
-            queue[last + 1] = null;
-        }
+        queue[index] = queue[last + 1];
+        queue[last + 1] = null;
 
         if (shouldDecreaseQueueSize()) {
             decreaseQueueSize();
@@ -84,7 +83,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private boolean shouldDecreaseQueueSize() {
-        return (queue.length) / 4 == size();
+        return queue.length > 1 && (queue.length) / 4 == size();
     }
 
     private void decreaseQueueSize() {
@@ -254,5 +253,22 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         assert queue.queueSize() == 4;
 
         System.out.println("the end");
+
+        //carga
+
+        Random r = new Random(1);
+
+        queue = new RandomizedQueue<>();
+        for(int i=0; i<1000; i++){
+
+            System.out.println(i);
+            double n = r.nextDouble();
+            if( n <= 0.1){
+                queue.enqueue(i);
+            }else if( n > 0.1 && n <= 0.8 && !queue.isEmpty()) {
+                queue.dequeue();
+            }
+
+        }
     }
 }
