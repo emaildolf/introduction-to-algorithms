@@ -145,6 +145,11 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
+
             Item item = (Item)node.item;
             node = node.next;
             return item;
@@ -242,6 +247,8 @@ public class Deque<Item> implements Iterable<Item> {
         }finally {
             assert failed == true;
         }
+
+        deque = new Deque<>();
 
         failed = false;
         try{
