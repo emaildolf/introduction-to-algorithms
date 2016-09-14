@@ -22,8 +22,7 @@ def dequeue() {
     return out.pop();
 }
 
-Every item will be pushed and pop twice in each stack. If the stacks implements constant time for push and pop then the resulting
-number of operations will be constant as well.
+Every item will be pushed and pop twice in each stack. If the stacks implements constant time for push and pop then the resulting number of operations will be constant as well.
 
 Q2. Stack with max.
 Create a data structure that efficiently supports the stack operations (push and pop) and also a return-the-maximum operation.
@@ -60,3 +59,5 @@ Q3. Java generics.
 Explain why Java prohibits generic array creation.
 
 A3.
+When an array is created in java there is a class representing it. This class is different from the object stored in the array. For instance, the class of Integer[] is diferent from the class of Integer. It is possible however to obtain the stored object type from the array type. In the example, it is possible to recover the Integer class from the Integer[] class.
+With generics, a type T is unknow in compile time. That means that the array class can't refer to the unknow type T.
