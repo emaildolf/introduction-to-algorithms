@@ -30,6 +30,31 @@ Create a data structure that efficiently supports the stack operations (push and
 Assume the elements are reals numbers so that you can compare them.
 
 A2.
+Keep a second stack to store the maximum value.
+
+Stack main = new Stack()
+Stack max = new Stack()
+
+def max() {
+    return max.top();
+}
+
+void push(val) {
+    if(main.isEmpty() || val >= max.top) {
+        max.push(val);
+    }
+    main.push(val);
+}
+
+def pop(){
+    if(main.top() == max.top()){
+        max.pop();
+    }
+    return main.pop();
+}
+
+Since the stacks implements constant time operations the expected time is also constant.
+
 
 Q3. Java generics.
 Explain why Java prohibits generic array creation.
