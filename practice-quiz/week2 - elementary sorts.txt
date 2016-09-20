@@ -1,0 +1,67 @@
+Q1 Intersection of two sets.
+Given two arrays a[] and b[], each containing n distinct 2D points in the plane, design a subquadratic algorithm to count the number of points that are contained both in array a[] and array b[].
+
+A1
+
+Create a Set with the elements
+
+Q2 Permutation.
+Given two integer arrays of size n, design a subquadratic algorithm to determine whether one is a permutation of the other.
+That is, do they contain exactly the same entries but, possibly, in a different order.
+
+A2
+Sort both arrays using any O(nlogn) sort them compare each position of both arrays checking if they have the same value
+
+if(array1.length != array2.length) {
+    return false
+}
+
+def sorted1 = sort(array1)
+def sorted2 = sort(array2)
+
+for(int i=0; i<array1.length; i++){
+    if(sorted1[i] != sorted2[i]){
+        return false
+    }
+}
+
+return true
+
+Analitics: O(nlogn) + O(n)
+
+Q3 Dutch national flag.
+Given an array of n buckets, each containing a red, white, or blue pebble, sort them by color. The allowed operations are:
+
+  swap(i,j): swap the pebble in bucket i with the pebble in bucket j.
+  color(i): color of pebble in bucket i.
+  The performance requirements are as follows:
+
+  At most n calls to color().
+  At most n calls to swap().
+  Constant extra space.
+
+A3
+def sort(List array) {
+
+    //order: red, white, blue
+    int redIndex = 0
+    int blueIndex = array.size()-1
+
+    int i = 0;
+    while(i <= blueIndex){
+
+        String color = color(array, i)
+
+        if(color == "red"){
+            swap(array, i, redIndex)
+            redIndex++
+            i++
+        }
+        else if(color == "blue"){
+            swap(array, i, blueIndex)
+            blueIndex--
+        }else{
+            i++
+        }
+    }
+}
