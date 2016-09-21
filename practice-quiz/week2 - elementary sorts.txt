@@ -3,7 +3,38 @@ Given two arrays a[] and b[], each containing n distinct 2D points in the plane,
 
 A1
 
-Create a Set with the elements
+int instersection(List a, List b){
+
+    if(a.size() == 0 || b.size() == 0){
+        return 0
+    }
+
+    a.sort(true)
+    b.sort(true)
+
+    int equals = 0
+    int j = 0
+    for(int i=0; i<a.size(); i++) {
+
+        Point pa = a[i]
+        Point pb = b[j]
+
+        while(pb.compareTo(pa) < 0){
+            j++
+            if(j == b.size()){
+                return equals
+            }
+
+            pb = b[j]
+        }
+
+        if(pb.compareTo(pa) == 0){
+            equals++
+        }
+    }
+
+    return equals
+}
 
 Q2 Permutation.
 Given two integer arrays of size n, design a subquadratic algorithm to determine whether one is a permutation of the other.

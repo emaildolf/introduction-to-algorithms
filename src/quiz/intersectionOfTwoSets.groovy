@@ -1,3 +1,6 @@
+import groovy.transform.EqualsAndHashCode
+
+@EqualsAndHashCode(includes=['x','y'])
 class Point implements Comparable<Point>{
     int x,y
 
@@ -58,7 +61,7 @@ int instersection(List a, List b){
 void test() {
 
     Random random = new Random()
-    int n = random.nextInt(10)
+    int n = random.nextInt(100)
 
     List a = []
     List b = []
@@ -69,15 +72,16 @@ void test() {
         Point p = new Point(random.nextInt(100), random.nextInt(100))
 
         double prob = random.nextDouble()
-
-        if(prob < 0.4){
-            a << p
-        }else if (prob >= 0.4 && prob < 0.8){
-            b << p
-        }else{
-            a << p
-            b << p
-            expectedEquals++
+        if(!a.contains(p) && !b.contains(p)){
+            if(prob < 0.4){
+                a << p
+            }else if (prob >= 0.4 && prob < 0.8){
+                b << p
+            }else{
+                a << p
+                b << p
+                expectedEquals++
+            }
         }
     }
 
