@@ -1,4 +1,7 @@
+package quiz
+
 import groovy.transform.EqualsAndHashCode
+
 
 @EqualsAndHashCode(includes=['x','y'])
 class Point implements Comparable<Point>{
