@@ -13,13 +13,13 @@ public class SampleClient {
         for (int i = 0; i < n; i++) {
             int x = in.readInt();
             int y = in.readInt();
-            points[i] = new Point(x/100+10, y/100+10);
+            points[i] = new Point(x, y);
         }
 
         // draw the points
         StdDraw.enableDoubleBuffering();
-        StdDraw.setXscale(0, 300);
-        StdDraw.setYscale(0, 300);
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
         for (Point p : points) {
             p.draw();
         }
