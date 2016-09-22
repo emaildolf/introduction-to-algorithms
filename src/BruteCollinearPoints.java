@@ -10,12 +10,14 @@ public class BruteCollinearPoints {
     private List<LineSegment> segments;
 
     // finds all line segments containing 4 points
-    public BruteCollinearPoints(Point[] points) {
+    public BruteCollinearPoints(Point[] ps) {
 
-        ensureArgumentNotNull(points);
-        ensureUniquePoints(points);
+        ensureArgumentNotNull(ps);
+        ensureUniquePoints(ps);
 
         segments = new LinkedList<>();
+
+        Point[] points = Arrays.copyOf(ps, ps.length);
 
         Arrays.sort(points);
 
