@@ -68,7 +68,12 @@ public class Point implements Comparable<Point> {
         }else if(deltaX == 0){
             return Double.POSITIVE_INFINITY;
         }else {
-            return deltaY/deltaX;
+            double slope = deltaY/deltaX;
+            if(slope == -0.0){
+                slope = 0.0;
+            }
+
+            return slope;
         }
     }
 
@@ -102,31 +107,17 @@ public class Point implements Comparable<Point> {
     public Comparator<Point> slopeOrder() {
 
         return new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
+
+                @Override
+                public int compare(Point p1, Point p2) {
 
                 double slopeP1 = Point.this.slopeTo(p1);
                 double slopeP2 = Point.this.slopeTo(p2);
 
-                if(slopeP1 == slopeP2){
-
-                    double distanceP1 = Point.this.distance(p1);
-                    double distanceP2 = Point.this.distance(p2);
-
-                    return Double.compare(distanceP1, distanceP2);
-                }
-
                 return Double.compare(slopeP1, slopeP2);
             }
+
         };
-    }
-
-    private double distance(Point that) {
-
-        double deltaY = that.y - this.y;
-        double deltaX = that.x - this.x;
-
-        return Math.sqrt(deltaY*deltaY + deltaX*deltaX);
     }
 
     /**
@@ -147,14 +138,20 @@ public class Point implements Comparable<Point> {
     public static void main(String[] args) {
         /* YOUR CODE HERE */
 
-        Point p = new Point(10, 0);
+        Point p = new Point(320, 146);
 
-        Point a = new Point(3, 4);
+        Point q = new Point(59, 117);
+        Point r = new Point(104, 122);
+
         Point b = new Point(7, 3);
         Point c = new Point(6, 7);
 
-        System.out.println(p + " -> " + a + " -> " + p.slopeTo(a));
-        System.out.println(p + " -> " + b + " -> " + p.slopeTo(b));
-        System.out.println(p + " -> " + c + " -> " + p.slopeTo(c));
+        System.out.println(p.slopeOrder().compare(q, r));
+
+        System.out.println(p + " -> " + q + " -> " + p.slopeTo(q));
+        System.out.println(p + " -> " + r + " -> " + p.slopeTo(r));
+
+//        System.out.println(p + " -> " + b + " -> " + p.slopeTo(b));
+//        System.out.println(p + " -> " + c + " -> " + p.slopeTo(c));
     }
 }
