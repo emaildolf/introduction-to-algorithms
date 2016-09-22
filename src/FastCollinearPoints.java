@@ -17,25 +17,27 @@ public class FastCollinearPoints {
         ensureUniquePoints(points);
 
         segments = new LinkedList<>();
+        Point[] naturalOrder = Arrays.copyOf(points, points.length);
+        Arrays.sort(naturalOrder);
 
-        Point[] sortedPoints = Arrays.copyOf(points, points.length);
+        for (int p = 0; p < naturalOrder.length; p++) {
 
-        for(int p=0; p<points.length; p++){
+            Point point = naturalOrder[p];
 
-            Point point = points[p];
-            Arrays.sort(sortedPoints, point.slopeOrder());
+            Point[] slopeOrder = Arrays.copyOf(naturalOrder, naturalOrder.length);
+            Arrays.sort(slopeOrder, point.slopeOrder());
 
             double slope = point.slopeTo(point);
             int count = 0;
-            for(int i=1; i<sortedPoints.length; i++){
+            for (int i = 1; i < slopeOrder.length; i++) {
 
-                double newSlope = point.slopeTo(sortedPoints[i]);
-                if(newSlope == slope){
+                double newSlope = point.slopeTo(slopeOrder[i]);
+                if (newSlope == slope) {
                     count++;
-                }else {
+                } else {
 
-                    if(count >= 3){
-                        segments.add(new LineSegment(point, sortedPoints[i-1]));
+                    if (count >= 3) {
+                        segments.add(new LineSegment(point, slopeOrder[i - 1]));
                     }
 
                     slope = newSlope;
