@@ -27,21 +27,30 @@ public class FastCollinearPoints {
             Point[] slopeOrder = Arrays.copyOf(naturalOrder, naturalOrder.length);
             Arrays.sort(slopeOrder, point.slopeOrder());
 
-            double slope = point.slopeTo(point);
-            int count = 0;
-            for (int i = 1; i < slopeOrder.length; i++) {
+            int count = 1;
+            for (int i = 1; i < slopeOrder.length-1; i++) {
 
-                double newSlope = point.slopeTo(slopeOrder[i]);
-                if (newSlope == slope) {
-                    count++;
-                } else {
+                double currentSlope = point.slopeTo(slopeOrder[i]);
+                double nextSlope = point.slopeTo(slopeOrder[i+1]);
 
-                    if (count >= 3) {
-                        segments.add(new LineSegment(point, slopeOrder[i - 1]));
+
+                if (currentSlope == nextSlope) {
+
+                    if(point.compareTo(slopeOrder[i]) > 0){
+                        count = -slopeOrder.length;
+                    }else {
+                        count++;
                     }
+                }
 
-                    slope = newSlope;
+                if (currentSlope != nextSlope) {
+                    if(count >= 3){
+                        segments.add(new LineSegment(point, slopeOrder[i]));
+                    }
                     count = 1;
+                }
+                else if(i == slopeOrder.length - 2 && count >= 3){
+                    segments.add(new LineSegment(point, slopeOrder[i+1]));
                 }
             }
         }
