@@ -1,7 +1,7 @@
+package collinear;
+
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
-import javafx.scene.shape.Line;
 
 import java.util.*;
 
