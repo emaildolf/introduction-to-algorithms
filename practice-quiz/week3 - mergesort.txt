@@ -1,0 +1,46 @@
+Q1. Merging with smaller auxiliary array.
+Suppose that the subarray a[0] to a[n?1] is sorted and the subarray a[n] to a[2?n?1] is sorted.
+How can you merge the two subarrays so that a[0] to a[2?n?1] is sorted using an auxiliary array of length n (instead of 2n)?
+
+A1.
+Lets consider the lower array as a[0] to a[n-1] and the upper arrya as a[n] to a[2*n-1].
+So we move the lower array into the aux array.
+Now we merge the aux array and the upper array into the lower array. Observe that while we consume the upper array we
+create room for incoming elements in the lower array.
+We have care about some boundaries conditions: lo show always be smaller than N and hi should be smaller than 2*N
+
+Groovy example:
+
+void merge(int[] array, int[] aux, int N) {
+
+    //copy lower array to aux
+    for(int n=0; n<N; n++){
+        aux[n] = array[n]
+    }
+
+    int n = 0
+    int lo = 0
+    int hi = N
+    while(n < 2*N){
+
+        if( lo < N && (hi >= 2*N || aux[lo] <= array[hi])){
+            array[n] = aux[lo]
+            lo++
+        }else {
+            array[n] = array[hi]
+            hi++
+        }
+        n++
+    }
+}
+
+Q2. Counting inversions.
+An inversion in an array a[] is a pair of entries a[i] and a[j] such that i<j but a[i]>a[j]. Given an array, design a linearithmic algorithm to count the number of inversions.
+
+A2
+
+Q3 Shuffling a linked list.
+Given a singly-linked list containing n items, rearrange the items uniformly at random.
+Your algorithm should consume a logarithmic (or constant) amount of extra memory and run in time proportional to nlogn in the worst case.
+
+A3
