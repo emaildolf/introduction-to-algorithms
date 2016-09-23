@@ -35,9 +35,44 @@ void merge(int[] array, int[] aux, int N) {
 }
 
 Q2. Counting inversions.
-An inversion in an array a[] is a pair of entries a[i] and a[j] such that i<j but a[i]>a[j]. Given an array, design a linearithmic algorithm to count the number of inversions.
+An inversion in an array a[] is a pair of entries a[i] and a[j] such that i<j but a[i]>a[j].
+Given an array, design a linearithmic algorithm to count the number of inversions.
 
 A2
+Implement a merge sort with a variable for counting the number of inversions.
+While merging an element from the upper subarray increment count with the amount of not merged yet elements from the lower
+ subarray. This amount represent the number of inversions related with the merging element.
+
+ int countInversionsMerge(int[] array, int[] aux, int lo, int hi) {
+
+     if(hi <= lo){
+         return 0
+     }
+     int mid = lo + (hi - lo)/2
+
+     int count = 0
+
+     count += countInversionsMerge(array, aux, lo, mid)
+     count += countInversionsMerge(array, aux, mid+1, hi)
+
+     //merge
+     for (int k = lo; k <= hi; k++)
+         aux[k] = array[k];
+     int i = lo, j = mid+1;
+
+     for (int k = lo; k <= hi; k++)
+     {
+         if (i > mid) array[k] = aux[j++]
+         else if (j > hi) array[k] = aux[i++]
+         else if (aux[j] < aux[i]) {
+             array[k] = aux[j++]
+             count += mid + 1 - i
+         }
+         else array[k] = aux[i++];
+     }
+
+     return count
+ }
 
 Q3 Shuffling a linked list.
 Given a singly-linked list containing n items, rearrange the items uniformly at random.
