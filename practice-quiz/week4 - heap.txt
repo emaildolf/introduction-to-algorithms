@@ -1,0 +1,75 @@
+Q1.Dynamic median.
+Design a data type that supports insert in logarithmic time, find-the-median in constant time, and remove-the-median in logarithmic time.
+
+A1.
+Keep two heaps: a max oriented heap for the bellow to the median elements (left) and a  min oriented for the above of the median elements (right).
+An extra variable for the median. To be consistent the num of elements to the left must be equal to the num of elements in the right (with tolerance os + - 1).
+When inserting a new value check if it is greater then median, if so insert to right heap. Insert to he left otherwise.
+If the size of the right heap gets greater + 1 of the left heap rotate left:
+left.insert(median)
+mediam = right.getMax()
+
+rotate right otherwise:
+right.insert(median)
+median = left.getMin()
+
+code:
+class DynamicMedian {
+
+    Integer median;
+    MinPQ<Integer> right
+    MaxPQ<Integer> left
+
+    public DynamicMedian() {
+        right = new MinPQ<>()
+        left = new MaxPQ<>()
+    }
+
+    void insert(int val) {
+
+        if (median == null) {
+            median = val
+        } else if (val > median) {
+
+            right.insert(val)
+
+            if (right.size() > left.size() + 1) {
+                rotateLeft()
+            }
+        } else {
+
+            left.insert(val)
+
+            if (left.size() > right.size() + 1) {
+                rotateRight()
+            }
+        }
+    }
+
+    private void rotateLeft() {
+        left.insert(median)
+        median = right.delMin()
+    }
+
+    private void rotateRight() {
+        right.insert(median)
+        median = left.delMax()
+    }
+
+    int peek() {
+        median
+    }
+
+    int delMedian() {
+
+        int tmp = median
+        if (left.size() > right.size()) {
+            median = left.delMax()
+        } else {
+            median = right.delMin()
+        }
+
+        return tmp
+    }
+}
+
