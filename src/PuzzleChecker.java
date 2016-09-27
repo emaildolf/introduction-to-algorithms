@@ -29,6 +29,8 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PuzzleChecker {
 
@@ -37,14 +39,30 @@ public class PuzzleChecker {
         File dir = new File(args[0]);
 
         if(dir.isDirectory()){
+
+            int poolSize = Runtime.getRuntime().availableProcessors();
+            ExecutorService pool = Executors.newFixedThreadPool(poolSize);
+
+            System.out.println("Pool size: " + poolSize);
+
             for (File file : dir.listFiles()) {
-                solveFile(file);
+
+                final File f = file;
+                pool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            solveFile(f);
+                        }
+                        catch(Throwable e) {
+                            System.err.println("Erro processando " + f.getPath());
+                        }
+                    }
+                });
             }
         }else{
             solveFile(dir);
         }
-
-
     }
 
     private static void solveFile(File file) {
