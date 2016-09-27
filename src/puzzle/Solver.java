@@ -1,9 +1,9 @@
+package puzzle;
+
 import edu.princeton.cs.algs4.MinPQ;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class Solver {
 
@@ -111,7 +111,7 @@ public class Solver {
     // solve a slider puzzle (given below)
     public static void main(String[] args) {
 
-//        Board board = new Board(new int[][]{{1, 2, 3}, {4, 5, 6}, {8, 7, 0}});
+//        puzzle.Board board = new puzzle.Board(new int[][]{{1, 2, 3}, {4, 5, 6}, {8, 7, 0}});
         Board board = new Board(new int[][]{{0, 1, 3}, {4, 2, 5}, {7, 8, 6}});
         Solver solver = new Solver(board);
 
