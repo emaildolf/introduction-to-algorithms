@@ -10,7 +10,13 @@ public class Board {
     // construct a board from an n-by-n array of blocks
     // (where blocks[i][j] = block in row i, column j)
     public Board(int[][] blocks) {
-        this.blocks = blocks;
+        this.blocks = new int[blocks[0].length][blocks[0].length];
+
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
+                this.blocks[i][j] = blocks[i][j];
+            }
+        }
     }
 
     // board dimension n
@@ -85,7 +91,7 @@ public class Board {
             x2 = r.nextInt(dimension());
             y2 = r.nextInt(dimension());
         }
-        while (x1 == x2 && y1 == y2);
+        while (blocks[x1][y1] == 0 || blocks[x2][y2] == 0 || (x1 == x2 && y1 == y2));
 
         Board twin = cloneBoard();
         twin.swap(x1, y1, x2, y2);
