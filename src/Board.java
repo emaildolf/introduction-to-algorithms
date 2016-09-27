@@ -22,10 +22,10 @@ public class Board {
     public int hamming() {
 
         int count = 0;
-        for(int i=0; i<dimension(); i++){
-            for(int j=0; j<dimension(); j++){
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
 
-                if(blocks[i][j]!=0 && goalFor(i, j) != blocks[i][j]){
+                if (blocks[i][j] != 0 && goalFor(i, j) != blocks[i][j]) {
                     count++;
                 }
             }
@@ -34,18 +34,18 @@ public class Board {
         return count;
     }
 
-    private int goalFor(int i, int j){
-        return i*dimension() + j + 1;
+    private int goalFor(int i, int j) {
+        return i * dimension() + j + 1;
     }
 
     // sum of Manhattan distances between blocks and goal
     public int manhattan() {
 
         int count = 0;
-        for(int i=0; i<dimension(); i++){
-            for(int j=0; j<dimension(); j++){
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
 
-                if(blocks[i][j] != 0) {
+                if (blocks[i][j] != 0) {
                     int goalX = goalX(blocks[i][j]);
                     int xDiff = Math.abs(goalX - j);
                     count += xDiff;
@@ -61,11 +61,11 @@ public class Board {
     }
 
     private int goalX(int value) {
-        return (value-1)%dimension();
+        return (value - 1) % dimension();
     }
 
     private int goalY(int value) {
-        return (value-1)/dimension();
+        return (value - 1) / dimension();
     }
 
     // is this board the goal board?
@@ -79,13 +79,13 @@ public class Board {
         Random r = new Random();
 
         int x1, y1, x2, y2;
-        do{
+        do {
             x1 = r.nextInt(dimension());
             y1 = r.nextInt(dimension());
             x2 = r.nextInt(dimension());
             y2 = r.nextInt(dimension());
         }
-        while(x1 == x2 && y1 == y2);
+        while (x1 == x2 && y1 == y2);
 
         Board twin = cloneBoard();
         twin.swap(x1, y1, x2, y2);
@@ -107,7 +107,7 @@ public class Board {
         if (other == null) return false;
         if (other.getClass() != this.getClass()) return false;
 
-        Board otherBoard = (Board)other;
+        Board otherBoard = (Board) other;
 
         return Arrays.deepEquals(blocks, otherBoard.blocks);
     }
@@ -117,9 +117,9 @@ public class Board {
 
         int i = 0;
         int j = 0;
-        while(blocks[i][j] != 0){
+        while (blocks[i][j] != 0) {
             i++;
-            if(i == dimension()){
+            if (i == dimension()) {
                 i = 0;
                 j++;
             }
@@ -127,65 +127,65 @@ public class Board {
 
         List<Board> neighbors = new ArrayList<>();
 
-        if(hasNorthNeightbor(i)){
+        if (hasNorthNeightbor(i)) {
             neighbors.add(northNeighbor(i, j));
         }
 
-        if(hasSouthNeightbor(i)){
+        if (hasSouthNeightbor(i)) {
             neighbors.add(southNeighbor(i, j));
         }
 
-        if(hasEastNeightbor(j)){
+        if (hasEastNeightbor(j)) {
             neighbors.add(eastNeighbor(i, j));
         }
 
-        if(hasWestNeighbor(j)){
+        if (hasWestNeighbor(j)) {
             neighbors.add(westNeighbor(i, j));
         }
 
         return neighbors;
     }
 
-    private boolean hasNorthNeightbor(int y0) {
-        return y0 > 0;
+    private boolean hasNorthNeightbor(int i) {
+        return i > 0;
     }
 
-    private Board northNeighbor(int x0, int y0){
+    private Board northNeighbor(int i, int j) {
         Board north = cloneBoard();
-        north.swap(x0, y0, x0, y0-1);
+        north.swap(i, j, i - 1, j);
 
         return north;
     }
 
-    private boolean hasSouthNeightbor(int y0){
-        return y0 + 1 < dimension();
+    private boolean hasSouthNeightbor(int i) {
+        return i + 1 < dimension();
     }
 
-    private Board southNeighbor(int x0, int y0){
+    private Board southNeighbor(int i, int j) {
         Board south = cloneBoard();
-        south.swap(x0, y0, x0, y0+1);
+        south.swap(i, j, i + 1, j);
 
         return south;
     }
 
-    private boolean hasEastNeightbor(int x0) {
-        return x0 + 1 < dimension();
+    private boolean hasEastNeightbor(int j) {
+        return j + 1 < dimension();
     }
 
-    private Board eastNeighbor(int x0, int y0){
+    private Board eastNeighbor(int i, int j) {
         Board east = cloneBoard();
-        east.swap(x0, y0, x0+1, y0);
+        east.swap(i, j, i, j + 1);
 
         return east;
     }
 
-    private boolean hasWestNeighbor(int x0){
-        return x0 > 0;
+    private boolean hasWestNeighbor(int j) {
+        return j > 0;
     }
 
-    private Board westNeighbor(int x0, int y0){
+    private Board westNeighbor(int i, int j) {
         Board west = cloneBoard();
-        west.swap(x0, y0, x0-1, y0);
+        west.swap(i, j, i, j - 1);
 
         return west;
     }
@@ -193,8 +193,8 @@ public class Board {
     private Board cloneBoard() {
 
         int[][] cloneBlocks = new int[dimension()][dimension()];
-        for(int i=0; i<dimension(); i++){
-            for(int j=0; j<dimension(); j++){
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
                 cloneBlocks[i][j] = blocks[i][j];
             }
         }
@@ -234,22 +234,26 @@ public class Board {
         assert !noGoal.equals(noGoal.twin());
 
 
-        Board hole = new Board(new int[][]{{1, 2, 3},{4, 0, 5},{6, 7, 8}});
+        Board hole = new Board(new int[][]{{1, 2, 3}, {4, 0, 5}, {6, 7, 8}});
 
-        List<Board> neigthbors = (List<Board>)hole.neighbors();
+        List<Board> neigthbors = (List<Board>) hole.neighbors();
         assert neigthbors.size() == 4;
 
         Board north = new Board(new int[][]{{1, 0, 3}, {4, 2, 5}, {6, 7, 8}});
-        neigthbors.contains(north);
+        assert neigthbors.contains(north);
+        assert north.equals(hole.northNeighbor(1, 1));
 
         Board south = new Board(new int[][]{{1, 2, 3}, {4, 7, 5}, {6, 0, 8}});
-        neigthbors.contains(south);
+        assert neigthbors.contains(south);
+        assert south.equals(hole.southNeighbor(1, 1));
 
-        Board east = new Board(new int[][]{{1, 2, 3}, {0, 4, 5}, {6, 7, 8}});
-        neigthbors.contains(east);
+        Board west = new Board(new int[][]{{1, 2, 3}, {0, 4, 5}, {6, 7, 8}});
+        assert neigthbors.contains(west);
+        assert west.equals(hole.westNeighbor(1, 1));
 
-        Board west = new Board(new int[][]{{1, 2, 3}, {4, 5, 0}, {6, 7, 8}});
-        neigthbors.contains(west);
+        Board east = new Board(new int[][]{{1, 2, 3}, {4, 5, 0}, {6, 7, 8}});
+        assert neigthbors.contains(east);
+        assert east.equals(hole.eastNeighbor(1, 1));
 
         System.out.println("ok!");
     }
