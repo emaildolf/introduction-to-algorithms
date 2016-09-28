@@ -73,3 +73,17 @@ class DynamicMedian {
     }
 }
 
+
+Q2.Randomized priority queue.
+Describe how to add the methods sample() and delRandom() to our binary heap implementation.
+The two methods return a key that is chosen uniformly at random among the remaining keys, with the latter method also removing that key.
+The sample() method should take constant time;
+the delRandom() method should take logarithmic time.
+Do not worry about resizing the underlying array.
+
+A2.
+Consider that the binary heap is impemented in an array. For sampling just pick a random number from 0 to N-1 and return it.
+For removing a random element, pick a random number and swap it with the last element in the heap.
+Remove the last element, that will be the returned and removed element.
+Apply the sink operation in the swaped element so it can be placed in its right position
+
