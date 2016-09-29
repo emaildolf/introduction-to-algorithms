@@ -1,0 +1,16 @@
+Q2. Check if a binary tree is a BST.
+Given a binary tree where each Node contains a key, determine whether it is a binary search tree.
+Use extra space proportional to the height of the tree.
+
+A2.
+boolean isBST(Node node) {
+
+    if(node == null) {
+        return true
+    }
+
+    boolean leftOk = node.left == null || node.value > node.left.value
+    boolean rightOk = node.right == null || node.value < node.right.value
+
+    return leftOk && rightOk && isBST(node.left) && isBST(node.right) 
+}
