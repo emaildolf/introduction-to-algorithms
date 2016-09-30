@@ -26,3 +26,15 @@ boolean isBST(Node node) {
 
     return leftOk && rightOk && isBST(node.left) && isBST(node.right)
 }
+
+Q3. Inorder traversal with constant extra space.
+Design an algorithm to perform an inorder traversal of a binary search tree using only a constant amount of extra space.
+
+A3.
+inOrderTraversal(Node node){
+    if(node == null) return;
+
+    inOrderTraversal(node.left)
+    println node.key
+    inOrderTraversal(node.right)
+}
