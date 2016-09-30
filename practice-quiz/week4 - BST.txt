@@ -38,3 +38,19 @@ inOrderTraversal(Node node){
     println node.key
     inOrderTraversal(node.right)
 }
+
+Q4. Web tracking.
+Suppose that you are tracking n web sites and m users and you want to support the following API:
+
+User visits a website.
+How many times has a given user visited a given site?
+
+A4.
+We can use an ST that uses the website url as key and another ST as values.
+This seconds ST uses the user name as key and the number of access as value.
+Every time an user access a website, recover the website and then the number of access for that user. Finally increment
+this number of access.
+
+The check if the user visits a website check if there is an entry in the users ST for that site key.
+To return the number of access of a user in a website return the value of the users ST for the site key.
+
