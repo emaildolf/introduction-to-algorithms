@@ -47,10 +47,12 @@ public class KdTree {
             return new Node(p, parentRect,isVertical);
         }
 
-        if(node.isLeft(p)){
-            node.lb = insert(p, node.lb, node.leftRect(), !isVertical);
-        }else {
-            node.rt = insert(p, node.rt, node.rightRect(parentRect), !isVertical);
+        if(!node.point.equals(p)){
+            if(node.isLeft(p)){
+                node.lb = insert(p, node.lb, node.leftRect(), !isVertical);
+            }else {
+                node.rt = insert(p, node.rt, node.rightRect(parentRect), !isVertical);
+            }
         }
 
         return node;
