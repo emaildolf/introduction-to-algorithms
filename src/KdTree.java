@@ -1,3 +1,4 @@
+import collinear.Point;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.StdDraw;
@@ -17,7 +18,7 @@ public class KdTree {
 
     // is the set empty?
     public boolean isEmpty() {
-        return root != null;
+        return root == null;
     }
 
     // number of points in the set
@@ -143,10 +144,55 @@ public class KdTree {
     }
 
     // a nearest neighbor in the set to point p; null if the set is empty
-    public Point2D nearest(Point2D p) {
+    public Point2D nearest(Point2D query) {
+
+        if(isEmpty()){
+            return null;
+        }
+
+        Point2D best = new Point2D(1000, 1000);
+        return nearest(root, plane, query, best);
+    }
+
+    private Point2D nearest(Node node, RectHV parentRect, Point2D query, Point2D best) {
+
+        if(node == null){
+            return best;
+        }
+
+        double distance = node.point.distanceSquaredTo(query);
+        double bestDistance = best.distanceSquaredTo(query);
+
+        if(distance < bestDistance) {
+            best = node.point;
+        }
+
+        double bestDistanceFromLeft = node.leftRect().distanceSquaredTo(query);
+        double bestDistanceFromRight = node.rightRect(parentRect).distanceSquaredTo(query);
 
 
-        return null;
+        if(bestDistanceFromLeft < bestDistanceFromRight){
+
+            //should go to the left first
+            best = nearest(node.lb, node.leftRect(), query, best);
+
+            //is the best distance from right better than my best distance?
+            if(bestDistanceFromRight < best.distanceSquaredTo(query)){
+                best = nearest(node.rt, node.rightRect(parentRect), query, best);
+            }
+
+        }else{
+
+            //should go to the right first
+            best = nearest(node.rt, node.rightRect(parentRect), query, best);
+
+            //is the best distance from the left better than my best distance?
+            if(bestDistanceFromRight < best.distanceSquaredTo(query)){
+                best = nearest(node.lb, node.leftRect(), query, best);
+            }
+        }
+
+        return best;
     }
 
     private class Node {
@@ -313,5 +359,10 @@ public class KdTree {
         assert points.size() == 2;
         assert points.contains(p2);
         assert points.contains(p4);
+
+        //test nearest
+        Point2D query = new Point2D(0, 0);
+        Point2D nearest = tree.nearest(query);
+        assert p3.equals(nearest);
     }
 }
