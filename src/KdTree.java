@@ -9,6 +9,7 @@ public class KdTree {
 
     private Node root;
     private RectHV plane;
+    private int size;
 
     // construct an empty set of points
     public KdTree() {
@@ -22,16 +23,7 @@ public class KdTree {
 
     // number of points in the set
     public int size() {
-        return size(root);
-    }
-
-    private int size(Node node) {
-
-        if (node == null) {
-            return 0;
-        }
-
-        return size(node.lb) + size(node.rt) + 1;
+        return size;
     }
 
     // add the point to the set (if it is not already in the set)
@@ -44,6 +36,7 @@ public class KdTree {
     private Node insert(Point2D p, Node node, RectHV parentRect, boolean isVertical) {
 
         if (node == null) {
+            size++;
             return new Node(p, parentRect, isVertical);
         }
 
