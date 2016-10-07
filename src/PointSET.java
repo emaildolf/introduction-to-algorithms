@@ -3,7 +3,6 @@ import edu.princeton.cs.algs4.RectHV;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
 public class PointSET {
