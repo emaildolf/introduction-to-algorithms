@@ -28,7 +28,7 @@ public class KdTree {
 
     private int size(Node node) {
 
-        if(node == null){
+        if (node == null) {
             return 0;
         }
 
@@ -44,14 +44,14 @@ public class KdTree {
 
     private Node insert(Point2D p, Node node, RectHV parentRect, boolean isVertical) {
 
-        if(node == null){
-            return new Node(p, parentRect,isVertical);
+        if (node == null) {
+            return new Node(p, parentRect, isVertical);
         }
 
-        if(!node.point.equals(p)){
-            if(node.isLeft(p)){
+        if (!node.point.equals(p)) {
+            if (node.isLeft(p)) {
                 node.lb = insert(p, node.lb, node.leftRect(), !isVertical);
-            }else {
+            } else {
                 node.rt = insert(p, node.rt, node.rightRect(parentRect), !isVertical);
             }
         }
@@ -68,17 +68,17 @@ public class KdTree {
 
     private boolean contains(Point2D p, Node node) {
 
-        if(node == null) {
+        if (node == null) {
             return false;
         }
 
-        if(p.equals(node.point)){
+        if (p.equals(node.point)) {
             return true;
         }
 
-        if(node.isLeft(p)){
+        if (node.isLeft(p)) {
             return contains(p, node.lb);
-        }else {
+        } else {
             return contains(p, node.rt);
         }
 
@@ -91,7 +91,7 @@ public class KdTree {
 
     private void draw(Node node, boolean isVertical) {
 
-        if(node == null){
+        if (node == null) {
             return;
         }
 
@@ -102,10 +102,10 @@ public class KdTree {
         StdDraw.setPenRadius();
 
         RectHV r = node.leftRect();
-        if(isVertical){
+        if (isVertical) {
             StdDraw.setPenColor(StdDraw.RED);
             StdDraw.line(r.xmax(), r.ymin(), r.xmax(), r.ymax());
-        }else {
+        } else {
             StdDraw.setPenColor(StdDraw.BLUE);
             StdDraw.line(r.xmin(), r.ymax(), r.xmax(), r.ymax());
         }
@@ -126,19 +126,19 @@ public class KdTree {
 
     private void range(Node node, RectHV parentRect, RectHV query, List<Point2D> points) {
 
-        if(node == null) {
+        if (node == null) {
             return;
         }
 
-        if(query.contains(node.point)){
+        if (query.contains(node.point)) {
             points.add(node.point);
         }
 
-        if(node.leftRect().intersects(query)){
+        if (node.leftRect().intersects(query)) {
             range(node.lb, node.leftRect(), query, points);
         }
 
-        if(node.rightRect(parentRect).intersects(query)){
+        if (node.rightRect(parentRect).intersects(query)) {
             range(node.rt, node.rightRect(parentRect), query, points);
         }
     }
@@ -146,7 +146,7 @@ public class KdTree {
     // a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D query) {
 
-        if(isEmpty()){
+        if (isEmpty()) {
             return null;
         }
 
@@ -156,14 +156,14 @@ public class KdTree {
 
     private Point2D nearest(Node node, RectHV parentRect, Point2D query, Point2D best) {
 
-        if(node == null){
+        if (node == null) {
             return best;
         }
 
         double distance = node.point.distanceSquaredTo(query);
         double bestDistance = best.distanceSquaredTo(query);
 
-        if(distance < bestDistance) {
+        if (distance < bestDistance) {
             best = node.point;
         }
 
@@ -171,23 +171,23 @@ public class KdTree {
         double bestDistanceFromRight = node.rightRect(parentRect).distanceSquaredTo(query);
 
 
-        if(bestDistanceFromLeft < bestDistanceFromRight){
+        if (bestDistanceFromLeft < bestDistanceFromRight) {
 
             //should go to the left first
             best = nearest(node.lb, node.leftRect(), query, best);
 
             //is the best distance from right better than my best distance?
-            if(bestDistanceFromRight < best.distanceSquaredTo(query)){
+            if (bestDistanceFromRight < best.distanceSquaredTo(query)) {
                 best = nearest(node.rt, node.rightRect(parentRect), query, best);
             }
 
-        }else{
+        } else {
 
             //should go to the right first
             best = nearest(node.rt, node.rightRect(parentRect), query, best);
 
             //is the best distance from the left better than my best distance?
-            if(bestDistanceFromRight < best.distanceSquaredTo(query)){
+            if (bestDistanceFromRight < best.distanceSquaredTo(query)) {
                 best = nearest(node.lb, node.leftRect(), query, best);
             }
         }
@@ -201,16 +201,16 @@ public class KdTree {
         private RectHV leftRect;
         private Point2D point;
 
-        public Node(Point2D point, RectHV parent, boolean isVertical){
+        public Node(Point2D point, RectHV parent, boolean isVertical) {
             this.point = point;
             leftRect = KdTree.this.split(parent, point, isVertical);
         }
 
-        public boolean isLeft(Point2D p){
+        public boolean isLeft(Point2D p) {
             return leftRect.contains(p);
         }
 
-        public boolean isRight(Point2D p){
+        public boolean isRight(Point2D p) {
             return !isLeft(p);
         }
 
@@ -225,38 +225,38 @@ public class KdTree {
 
     private RectHV complement(RectHV parent, RectHV lb) {
 
-        if(parent.ymax() == lb.ymax()){
+        if (parent.ymax() == lb.ymax()) {
             //vertical
-            return new RectHV(  lb.xmax(), //xmin
-                                lb.ymin(),  //ymin
-                                parent.xmax(), //xmax
-                                parent.ymax()); //ymax
-        }else {
+            return new RectHV(lb.xmax(), //xmin
+                    lb.ymin(),  //ymin
+                    parent.xmax(), //xmax
+                    parent.ymax()); //ymax
+        } else {
             //horizontal
-            return new RectHV(  lb.xmin(), //xmin
-                                lb.ymax(),  //ymin
-                                lb.xmax(), //xmax
-                                parent.ymax()); //ymax
+            return new RectHV(lb.xmin(), //xmin
+                    lb.ymax(),  //ymin
+                    lb.xmax(), //xmax
+                    parent.ymax()); //ymax
         }
     }
 
     private RectHV split(RectHV parent, Point2D point, boolean isVertical) {
 
-        if(isVertical){
-            return new RectHV(  parent.xmin(),
-                                parent.ymin(),
-                                point.x(),
-                                parent.ymax());
-        }else {
-            return new RectHV(  parent.xmin(),
-                                parent.ymin(),
-                                parent.xmax(),
-                                point.y());
+        if (isVertical) {
+            return new RectHV(parent.xmin(),
+                    parent.ymin(),
+                    point.x(),
+                    parent.ymax());
+        } else {
+            return new RectHV(parent.xmin(),
+                    parent.ymin(),
+                    parent.xmax(),
+                    point.y());
         }
     }
 
     private void ensuresNotNull(Object o) {
-        if(o == null) {
+        if (o == null) {
             throw new NullPointerException();
         }
     }
@@ -341,7 +341,7 @@ public class KdTree {
 
         //test range
         RectHV plane = new RectHV(0, 0, 1, 1);
-        List<Point2D> points = (List<Point2D>)tree.range(plane);
+        List<Point2D> points = (List<Point2D>) tree.range(plane);
         assert points.size() == 5;
         assert points.contains(p1);
         assert points.contains(p2);
@@ -350,12 +350,12 @@ public class KdTree {
         assert points.contains(p5);
 
         RectHV subPlane = new RectHV(0, 0, 0.3, 0.5);
-        points = (List<Point2D>)tree.range(subPlane);
+        points = (List<Point2D>) tree.range(subPlane);
         assert points.size() == 1;
         assert points.contains(p3);
 
         subPlane = new RectHV(0.3, 0.2, 0.6, 0.8);
-        points = (List<Point2D>)tree.range(subPlane);
+        points = (List<Point2D>) tree.range(subPlane);
         assert points.size() == 2;
         assert points.contains(p2);
         assert points.contains(p4);

@@ -40,7 +40,7 @@ public class PointSET {
     // draw all points to standard draw
     public void draw() {
 
-        for(Point2D p : points){
+        for (Point2D p : points) {
             p.draw();
         }
     }
@@ -50,8 +50,8 @@ public class PointSET {
         ensuresNotNull(rect);
         List<Point2D> inside = new LinkedList<>();
 
-        for(Point2D p : points){
-            if(rect.contains(p)){
+        for (Point2D p : points) {
+            if (rect.contains(p)) {
                 inside.add(p);
             }
         }
@@ -65,11 +65,11 @@ public class PointSET {
 
         Point2D nearest = null;
 
-        for(Point2D point : points){
+        for (Point2D point : points) {
 
-            if(nearest == null){
+            if (nearest == null) {
                 nearest = point;
-            }else if( p.distanceSquaredTo(point) < p.distanceSquaredTo(nearest) ) {
+            } else if (p.distanceSquaredTo(point) < p.distanceSquaredTo(nearest)) {
                 nearest = point;
             }
         }
@@ -78,7 +78,7 @@ public class PointSET {
     }
 
     private void ensuresNotNull(Object o) {
-        if(o == null) {
+        if (o == null) {
             throw new NullPointerException();
         }
     }
