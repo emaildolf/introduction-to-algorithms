@@ -160,7 +160,8 @@ public class KdTree {
         }
 
         double bestDistanceFromLeft = node.leftRect().distanceSquaredTo(query);
-        double bestDistanceFromRight = node.rightRect(parentRect).distanceSquaredTo(query);
+        RectHV rightRect = node.rightRect(parentRect);
+        double bestDistanceFromRight = rightRect.distanceSquaredTo(query);
 
 
         if (bestDistanceFromLeft < bestDistanceFromRight) {
@@ -170,13 +171,13 @@ public class KdTree {
 
             //is the best distance from right better than my best distance?
             if (bestDistanceFromRight < best.distanceSquaredTo(query)) {
-                best = nearest(node.rt, node.rightRect(parentRect), query, best);
+                best = nearest(node.rt, rightRect, query, best);
             }
 
         } else {
 
             //should go to the right first
-            best = nearest(node.rt, node.rightRect(parentRect), query, best);
+            best = nearest(node.rt, rightRect, query, best);
 
             //is the best distance from the left better than my best distance?
             if (bestDistanceFromRight < best.distanceSquaredTo(query)) {
